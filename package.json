@@ -13,6 +13,9 @@
     "build": "rm -rf ./dist && tsc",
     "lint": "tslint -p ."
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "Dominic Smith",
   "license": "MIT",
   "devDependencies": {
