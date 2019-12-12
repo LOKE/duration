@@ -1,0 +1,26 @@
+{
+  "name": "@loke/duration",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "rm -rf ./dist && tsc && node ./dist/test.js",
+    "prepare": "npm run build",
+    "build": "rm -rf ./dist && tsc",
+    "lint": "tslint -p ."
+  },
+  "author": "Dominic Smith",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.12.21",
+    "prettier": "^1.16.4",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {}
+}

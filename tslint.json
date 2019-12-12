@@ -1,0 +1,15 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "jsRules": {},
+  "rules": {
+    "no-switch-case-fall-through": true,
+    "member-access": [true, "no-public"],
+    "interface-name": [true, "never-prefix"],
+    "array-type": false,
+    "no-bitwise": false,
+    "no-any": true
+  },
+  "exclude": ["node_modules"],
+  "rulesDirectory": []
+}
