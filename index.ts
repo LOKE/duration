@@ -17,13 +17,11 @@ const units = new Map([
   ["ms", MILLISECOND],
   ["s", SECOND],
   ["m", MINUTE],
-  ["h", HOUR]
+  ["h", HOUR],
 ]);
 
-// const stringFormatRe = /(?<num>[0-9]+\.?|[0-9]*(\.[0-9]+))(?<unit>[^\d\.]+)/g;
-
-function matchAll(str: string) {
-  const stringFormatRe = /(?<num>[0-9]+\.?|[0-9]*(\.[0-9]+))(?<unit>[^\d\.]+)/g;
+function matchAll(str: string): { unit: string; num: string }[] {
+  const stringFormatRe = /([0-9]+\.?|[0-9]*(?:\.[0-9]+))([^\d\.]+)/g;
   const matches = [];
 
   while (true) {
@@ -36,7 +34,7 @@ function matchAll(str: string) {
     matches.push(match);
   }
 
-  return matches;
+  return matches.map((m) => ({ unit: m[2], num: m[1] }));
 }
 
 function toPres(val: number, maxDec: number) {
@@ -72,11 +70,11 @@ export function parse(str: string): Duration {
   for (const part of parts) {
     hasParts = true;
     // console.log(part);
-    const unit = units.get(part.groups!.unit);
+    const unit = units.get(part.unit);
     if (!unit) {
-      throw new Error(`unknown unit '${part.groups!.unit}' in ${str}`);
+      throw new Error(`unknown unit '${part.unit}' in ${str}`);
     }
-    duration += parseFloat(part.groups!.num) * unit;
+    duration += parseFloat(part.num) * unit;
   }
 
   if (!hasParts) {
@@ -151,7 +149,7 @@ export function toSeconds(duration: Duration): number {
  * converts a hr duration into seconds, useful for prometheus histograms & gauges
  * @param duration - hr duration from process.hrtime
  */
-export function fromHRToSeconds(duration: [number, number]): Duration {
+export function fromHRToSeconds(duration: [number, number]): number {
   const [s, n] = duration;
   return s + n / 1e9;
 }
